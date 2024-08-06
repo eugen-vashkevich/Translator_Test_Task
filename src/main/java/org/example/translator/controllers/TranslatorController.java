@@ -23,7 +23,7 @@ public class TranslatorController {
 
     @PostMapping("/translate")
     public ResponseEntity<String> translate(
-            @RequestBody TranslateRequest translateBody, HttpServletRequest request) throws SQLException, IOException {
+            @RequestBody TranslateRequest translateBody, HttpServletRequest request) {
         final var ipAddress = request.getRemoteAddr();
         return translatorService.translate(translateBody, ipAddress);
     }

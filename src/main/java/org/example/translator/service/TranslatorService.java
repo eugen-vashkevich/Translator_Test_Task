@@ -1,5 +1,6 @@
 package org.example.translator.service;
 
+import org.apache.coyote.BadRequestException;
 import org.example.translator.models.TranslateRequest;
 import org.example.translator.repositories.TranslationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,18 +32,19 @@ public class TranslatorService {
 
   private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-  public ResponseEntity<String> translate(TranslateRequest translateBody, String ipAddress)
-      throws SQLException {
+  public ResponseEntity<String> translate(TranslateRequest translateBody, String ipAddress) {
     final var sourceLanguage = translateBody.getSourceLang();
     final var targetLanguage = translateBody.getTargetLang();
     final var words = splitSentence(translateBody.getTextToTranslate());
 
-    List<Future<String>> futures = words.stream()
+    List<Future<String>> futures =
+        words.stream()
             .filter(word -> !Pattern.matches("\\p{Punct}", word))
-            .map(word -> {
-              final var url = urlBuilder.buildUrl(sourceLanguage, targetLanguage, word);
-              return executorService.submit(new TranslationTask(url, restTemplate));
-            })
+            .map(
+                word -> {
+                  final var url = urlBuilder.buildUrl(sourceLanguage, targetLanguage, word);
+                  return executorService.submit(new TranslationTask(url, restTemplate));
+                })
             .collect(Collectors.toList());
 
     final var translatedWords = handleFutures(futures);
@@ -54,7 +56,12 @@ public class TranslatorService {
 
     translateBody.setTranslatedText(translatedText);
     translateBody.setIpAddress(ipAddress);
-    translationRepository.save(translateBody);
+
+    try {
+      translationRepository.save(translateBody);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
 
     return new ResponseEntity<>(translatedText, HttpStatus.OK);
   }
