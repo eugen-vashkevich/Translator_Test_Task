@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgre
+    ports:
+      - "5435:5432"
+    networks:
+      - translator_network
+  app:
+    image: translator_test_task_app:latest  # Replace with the correct image name and tag
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgre
+    networks:
+      - translator_network
+    ports:
+      - "8080:8080"
+networks:
+  translator_network:
+    driver: bridge
