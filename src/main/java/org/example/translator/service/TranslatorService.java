@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import static org.example.translator.service.SentenceSplitter.splitSentence;
 
+/** Service class responsible for translating text from a source language to a target language. */
 @Service
 public class TranslatorService {
 
@@ -30,6 +31,14 @@ public class TranslatorService {
 
   private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
+  /**
+   * Translates the text provided in the TranslateRequest object from the source language to the target language.
+   * The translated text is then saved to the database along with the IP address of the requester.
+   *
+   * @param translateBody the request body containing source language, target language, and text to translate
+   * @param ipAddress the IP address of the requester
+   * @return a ResponseEntity containing the translated text and HTTP status code
+   */
   public ResponseEntity<String> translate(TranslateRequest translateBody, String ipAddress) {
     final var sourceLanguage = translateBody.getSourceLang();
     final var targetLanguage = translateBody.getTargetLang();

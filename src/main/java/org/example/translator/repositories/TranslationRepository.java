@@ -17,6 +17,14 @@ public class TranslationRepository implements ITranslationRepository {
     this.jdbcTemplate = jdbcTemplate;
   }
 
+  /**
+   * Saves a translation request to the database.
+   *
+   * @param translationRequest The {@link TranslateRequest} object containing the details to be
+   *     saved in the database. Must not be {@code null}.
+   * @throws SQLException if a database access error occurs, or if no rows are affected by the
+   *     update.
+   */
   @Override
   public void save(TranslateRequest translationRequest) throws SQLException {
     final var sqlQuery =
