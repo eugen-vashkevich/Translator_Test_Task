@@ -7,8 +7,6 @@ public class TranslateRequest {
   private String textToTranslate;
   private String translatedText;
 
-
-
   public TranslateRequest(String textToTranslate, String sourceLang, String targetLang) {
     this.textToTranslate = textToTranslate;
     this.sourceLang = sourceLang;

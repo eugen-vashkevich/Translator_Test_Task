@@ -1,6 +1,5 @@
 package org.example.translator.service;
 
-import org.apache.coyote.BadRequestException;
 import org.example.translator.models.TranslateRequest;
 import org.example.translator.repositories.TranslationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

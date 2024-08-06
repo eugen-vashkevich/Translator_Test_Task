@@ -20,11 +20,11 @@ public class TranslationRepository implements ITranslationRepository {
   @Override
   public void save(TranslateRequest translationRequest) throws SQLException {
     final var sqlQuery =
-            "INSERT INTO translation_requests (ip_address, input_text, translated_text, source_language, target_language) VALUES (?, ?, ?, ?, ?)";
+        "INSERT INTO translation_requests (ip_address, input_text, translated_text, source_language, target_language) VALUES (?, ?, ?, ?, ?)";
 
     try (Connection connection =
-                 Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+            Objects.requireNonNull(jdbcTemplate.getDataSource()).getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
 
       preparedStatement.setString(1, translationRequest.getIpAddress());
       preparedStatement.setString(2, translationRequest.getTextToTranslate());

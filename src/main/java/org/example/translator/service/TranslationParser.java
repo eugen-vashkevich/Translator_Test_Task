@@ -22,7 +22,7 @@ public class TranslationParser {
 
     JsonNode translation = translationsArray.get(0);
     if (translation.isArray() && translation.get(4).asInt() != 5) {
-        return translation.get(0).asText();
+      return translation.get(0).asText();
     } else {
       throw new IOException("Unknown code language");
     }
