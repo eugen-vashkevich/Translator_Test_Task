@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 
 import static org.example.translator.service.TranslationParser.parseTranslationResponse;
 
-class TranslationTask implements Callable<String> {
+public class TranslationTask implements Callable<String> {
   private final String url;
   private final RestTemplate restTemplate;
 
