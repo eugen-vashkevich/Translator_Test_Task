@@ -11,7 +11,7 @@ services:
     networks:
       - translator_network
   app:
-    image: translator_test_task_app:latest  # Replace with the correct image name and tag
+    image: translator_test_task_app:latest
     depends_on:
       - db
     environment:
